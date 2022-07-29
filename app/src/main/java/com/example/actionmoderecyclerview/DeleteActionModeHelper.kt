@@ -9,7 +9,7 @@ class DeleteActionModeHelper<T> constructor(
     private val notifyItemChanged: (item: T) -> Unit
 ) : ActionMode.Callback {
     private val deleteList = mutableListOf<T>()
-    var deleteActionMode: ActionMode? = null
+    private var deleteActionMode: ActionMode? = null
     val itemLongClick: (T) -> Unit = { item ->
         if (deleteActionMode == null)
             deleteMode.deleteActionMode(this)
@@ -36,7 +36,7 @@ class DeleteActionModeHelper<T> constructor(
     override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuDeleteButton -> {
-                deleteMode.complete(getCompleteList())
+                deleteMode.complete(deleteList,getCompleteList())
                 mode.finish()
             }
         }
@@ -69,7 +69,7 @@ class DeleteActionModeHelper<T> constructor(
 
 interface DeleteActionMode<T> {
     fun deleteActionMode(actionCallback: ActionMode.Callback)
-    fun complete(completeList: List<T>)
+    fun complete(deletedList : List<T>,completeList: List<T>)
     fun getDeleteTitle(deleteListSize: Int): String
     fun getCurrentList() : List<T>
 }

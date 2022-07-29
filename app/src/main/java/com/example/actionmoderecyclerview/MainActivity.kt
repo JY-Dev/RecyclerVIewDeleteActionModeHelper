@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity(){
                 startSupportActionMode(actionCallback)
             }
 
-            override fun complete(completeList: List<String>) {
+            override fun complete(deletedList : List<String>, completeList: List<String>) {
                 deleteActionModeAdapter.submitList(completeList)
             }
 
